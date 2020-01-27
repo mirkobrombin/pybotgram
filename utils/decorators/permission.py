@@ -17,7 +17,34 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from . import hello
+from configs import users
 
-def init(update, context):
-    hello.init(update, context)
+'''
+Define a function that requires bot admin permissions.
+'''
+def is_bot_admin():
+	def decorator(fn):
+		def wrapper(*args,**kwargs):
+			user = args[0].message.from_user
+			if user.id in users.bot_admin:
+				return fn(*args,**kwargs)
+			else:
+				return False
+		return wrapper
+	return decorator
+
+'''
+Define a function that requires group admin permissions.
+'''
+def is_admin():
+	def decorator(fn):
+		def wrapper(*args,**kwargs):
+			bot = args[1].bot
+			user = args[0].message.from_user
+			chat_id = args[0].message.chat_id
+			if bot.get_chat_member(chat_id, user.id).status in ["creator", "administrator"]:
+				return fn(*args,**kwargs)
+			else:
+				return False
+		return wrapper
+	return decorator

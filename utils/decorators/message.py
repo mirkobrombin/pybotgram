@@ -17,7 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from . import hello
+from configs import users
 
-def init(update, context):
-    hello.init(update, context)
+'''
+Check if function is not intended to use as cmd
+'''
+def is_not_cmd():
+	def decorator(fn):
+		def wrapper(*args,**kwargs):
+			if not args[0].message.text.startswith('/'):
+				return fn(*args,**kwargs)
+			else:
+				return False
+		return wrapper
+	return decorator

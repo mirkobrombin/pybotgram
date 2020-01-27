@@ -17,7 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from . import hello
+'''
+References:
+<https://core.telegram.org/bots/api>
+<https://python-telegram-bot.readthedocs.io/en/stable/>
+'''
+from utils import user
 
 def init(update, context):
-    hello.init(update, context)
+    bot = context.bot
+    update.message.reply_text(
+        "Hi {username}, you can see the source here: https://github.com/mirkobrombin/pybotgram".format
+        (
+            username = user.get_name(update.message.from_user)
+        )
+    )

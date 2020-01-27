@@ -17,7 +17,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from . import hello
+'''
+References:
+<https://core.telegram.org/bots/api>
+<https://python-telegram-bot.readthedocs.io/en/stable/>
+'''
+from utils import user, mess, up
+from utils.decorators import permission
 
+@permission.is_admin()
 def init(update, context):
-    hello.init(update, context)
+    bot = context.bot
+    mess.delete(bot, update)
+    bot.send_message(up.chat_id(update), mess.get_cmd_text("/say", update))

@@ -25,4 +25,4 @@ logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def error(update, context):
-    logger.warning('Update "%s" result in error: "%s"', update, context.error)
+    logger.warning('Update "%s" caused error "%s"', update, context.error)

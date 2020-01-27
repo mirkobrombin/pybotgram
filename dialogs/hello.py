@@ -18,10 +18,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from utils import mess, user
+from utils.decorators import message
 
-def init(update):
+@message.is_not_cmd()
+def init(update, context):
     if mess.equal(update.message.text, "Hi"):
-        update.message.reply_text("Hi {username}!".format(
-                                    username = user.get_name(update.message.from_user)
+        update.message.reply_text(
+            "Hi {username}!".format
+            (
+                username = user.get_name(update.message.from_user)
             )
         )

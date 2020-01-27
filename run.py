@@ -18,15 +18,17 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import commands, configs, dialogs, utils
+import admin, user, configs, dialogs, utils
 
 def main():
-    updater = Updater(configs.telegram.bot_token)
+    updater = Updater(configs.telegram.bot_token, use_context=True)
     dp = updater.dispatcher
 
-    # Commands
-    dp.add_handler(CommandHandler("start", commands.start.init))
-    dp.add_handler(CommandHandler("say", commands.say.init))
+    # Admin
+    dp.add_handler(CommandHandler("say", admin.say.init))
+
+    # User
+    dp.add_handler(CommandHandler("start", user.start.init))
     
     # Initialize Handlers
     dp.add_handler(MessageHandler(None, dialogs.handler.init))
