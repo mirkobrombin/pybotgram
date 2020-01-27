@@ -17,19 +17,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-'''
-References:
-<https://core.telegram.org/bots/api>
-<https://python-telegram-bot.readthedocs.io/en/stable/>
-'''
-from utils import user
-from utils.decorators import chat
+from configs import users
 
-@chat.only_private
-def init(update, context):
-    update.message.reply_text(
-        "Hi {username}, you can see the source here: https://github.com/mirkobrombin/pybotgram".format
-        (
-            username = user.get_name(update.message.from_user)
-        )
-    )
+'''
+Binds a function to private chats only
+'''
+def only_private(fn):
+	def wrapper(*args,**kwargs):
+		message = args[0].message
+		if message.chat.type == 'private':
+			return fn(*args,**kwargs)
+		else:
+			return False
+	return wrapper
+
+'''
+Binds a function to groups only
+'''
+def only_groups(fn):
+	def wrapper(*args,**kwargs):
+		message = args[0].message
+		if message.chat.type != 'private':
+			return fn(*args,**kwargs)
+		else:
+			return False
+	return wrapper
