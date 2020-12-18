@@ -1,8 +1,6 @@
 # pybotgram
 Telegram bot template in python-telegram-bot
 
-> **This repository was moved: https://git.mirko.pm/brombinmirko/pybotgram**
-
 ## Start from here
 * Clone this repo
 * Edit bot_token in configs.telegram
